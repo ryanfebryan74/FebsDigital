@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="2.5"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="2.6"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Febs%20Digital%22%2C%22short_name%22%3A%22Febs%22%2C%22display%22%3A%22standalone%22%2C%22start_url%22%3A%22.%22%2C%22background_color%22%3A%22%2307122E%22%2C%22theme_color%22%3A%22%230B1F4B%22%7D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@700;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
 <style>
 #febs,:root{--bg:#07122E;--navy:#0B1F4B;--or:#FF8A1F;--cy:#22D3EE;--vi:#7C3AED;--tx:#475569;--bd:#E2E8F0}
@@ -155,9 +156,18 @@ footer{margin-top:36px;padding:28px 16px 8px;text-align:center;border-top:1px so
  .sw0{left:27%;top:6%;width:46%}.sw1{left:2%;top:40%;width:38%}.sw2{right:2%;top:0;width:40%}
  .swc{padding:20px 10px 8px}.swc b{font-size:11px}.swc span{font-size:12px}.fchip{font-size:11px;padding:6px 11px}
 }
+/* v2.6: banner tanpa delay (efek berat dikurangi) + tombol preview */
+.hero,.panel,.auth,.glass:not(.adm){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.glass:not(.adm){background:rgba(14,28,66,.82)}
+.hero{background:linear-gradient(135deg,rgba(11,31,75,.9),rgba(7,18,46,.84))}
+.panel{background:linear-gradient(160deg,rgba(11,31,75,.9),rgba(7,18,46,.93))}
+.hero:before{inset:0;animation:none}
+.hero h1{filter:none}
+.sw,.fchip,.mqt{will-change:transform;backface-visibility:hidden}
+.btn.prv{background:linear-gradient(135deg,#22D3EE,#7C3AED);box-shadow:0 8px 24px #7c3aed55}
 </style></head><body>
 <div id="febs"><canvas id="bg"></canvas><nav class="side glass" id="nav"></nav><main id="app"><div style="padding:90px 20px;text-align:center;color:#94a3b8">Memuat Febs Digital...</div></main><div id="wab"></div><div id="mdl"></div><div id="toast"></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script type="module">
 // KONFIGURASI APLIKASI
 const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY / PUBLISH agar terhubung murni ke Firebase tanpa data dummy
@@ -211,18 +221,23 @@ if(IS_PREVIEW){
 }else{
   // v1.6: pakai CDN resmi Google (gstatic) agar app, firestore, dan auth berbagi satu instance Firebase yang sama
   const B='https://www.gstatic.com/firebasejs/10.12.2/';
-  const {initializeApp}=await import(B+'firebase-app.js'),F=await import(B+'firebase-firestore.js'),Au=await import(B+'firebase-auth.js');
+  const ready=(async()=>{const [{initializeApp},F,Au]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-firestore.js'),import(B+'firebase-auth.js')]);
   const app=initializeApp(firebaseConfig),fs=F.getFirestore(app),au=Au.getAuth(app);
   try{await Au.setPersistence(au,Au.browserSessionPersistence)}catch(e){} // login admin tidak diingat setelah tab ditutup
-  DB={async list(c){return(await F.getDocs(F.collection(fs,c))).docs.map(d=>({id:d.id,...d.data()}))},async add(c,d){return(await F.addDoc(F.collection(fs,c),d)).id},
+  const IMPL={async list(c){return(await F.getDocs(F.collection(fs,c))).docs.map(d=>({id:d.id,...d.data()}))},async add(c,d){return(await F.addDoc(F.collection(fs,c),d)).id},
     async set(c,id,d){await F.updateDoc(F.doc(fs,c,id),d)},async del(c,id){await F.deleteDoc(F.doc(fs,c,id))},
     async getSettings(){const s=await F.getDoc(F.doc(fs,'settings','site'));return s.exists()?s.data():{}},async saveSettings(d){await F.setDoc(F.doc(fs,'settings','site'),d,{merge:true})},
     async login(e,p){return(await Au.signInWithEmailAndPassword(au,e,p)).user},async logout(){await Au.signOut(au)}};
-  Au.onAuthStateChanged(au,async u=>{S.admin=u?{email:u.email}:null;if(u)await loadAdmin();render()});
+  Au.onAuthStateChanged(au,async u=>{S.admin=u?{email:u.email}:null;if(u)await loadAdmin();render()});return IMPL})();
+  ready.catch(e=>bug('Firebase gagal dimuat: '+e.message));
+  DB=new Proxy({},{get:(_,k)=>(...a)=>ready.then(I=>I[k](...a))});
 }
 
 // ===== STATE =====
 const S={prod:[],cat:[],mem:[],clk:[],sec:[],pw:{},imgs:[],dr:{},gi:0,set:{...DEF},view:'home',cf:'all',q:'',user:null,admin:null,tab:'dash',edit:null,modal:null,loading:true,amode:'member'};
+// v2.6: data tersimpan di browser ditampilkan lebih dulu, lalu diperbarui dari server di belakang layar
+const CK='febs_cache_v26';
+if(!IS_PREVIEW)try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(c&&c.p){S.prod=c.p;S.cat=c.c||[];S.set={...DEF,...c.s};S.loading=false}}catch(e){}
 const cover=p=>(p.gambarList&&p.gambarList[0])||p.gambarUrl||'';
 // Urutan: angka kecil tampil lebih dulu; kosong/0 dianggap paling akhir; jika sama, diurutkan menurut judul
 const ord=(a,b)=>((+a.urutan>0?+a.urutan:1e9)-(+b.urutan>0?+b.urutan:1e9))||String(a.judul).localeCompare(String(b.judul));
@@ -232,9 +247,9 @@ const renum=l=>Promise.all(l.map((p,n)=>p.urutan===n+1?null:DB.set('products',p.
 // Badge: warna berbeda per jenis (HOT merah-oranye, BARU hijau, DISKON ungu, dst.); teks lain otomatis dapat warna sendiri
 const BDC={hot:'hot',baru:'new',new:'new',diskon:'dsc',promo:'dsc',sale:'dsc',terlaris:'bst','best seller':'bst',bestseller:'bst',limited:'ltd',terbatas:'ltd'},PAL=['#0891B2','#DB2777','#65A30D','#EA580C','#7C3AED','#0D9488'];
 const bdi=b=>{if(!b)return'';const k=String(b).trim().toLowerCase(),c=BDC[k];if(c)return`<i class="bd ${c}">${k==='hot'?'🔥 ':''}${esc(b)}</i>`;let h=0;for(const ch of k)h=(h*31+ch.charCodeAt(0))>>>0;return`<i class="bd" style="background:${PAL[h%PAL.length]}">${esc(b)}</i>`};
-async function loadAll(){
+async function loadAll(){const sig0=JSON.stringify([S.prod,S.cat,S.set]),was=S.loading;
   try{const[p,c,m,s]=await Promise.all([DB.list('products'),DB.list('categories'),DB.list('members'),DB.getSettings()]);S.prod=p;S.cat=c.sort((a,b)=>(a.urutan||0)-(b.urutan||0));S.mem=m;S.set={...DEF,...s};if((S.set.taglineList||[]).join('|')==='Download Instan, Pakai Hari Ini|Satu Kali Bayar, Akses Seumur Hidup|Template dan Tools Siap Pakai, Hemat Waktu Berjam-jam')S.set.taglineList=DEF.taglineList}catch(e){t('Gagal memuat data: '+e.message)}
-  S.loading=false;render();
+  S.loading=false;if(!IS_PREVIEW)try{const j=JSON.stringify({p:S.prod,c:S.cat,s:S.set});if(j.length<4e6)localStorage.setItem(CK,j)}catch(e){}if(was||JSON.stringify([S.prod,S.cat,S.set])!==sig0)render();
 }
 async function loadAdmin(){try{S.clk=await DB.list('clicks');S.mem=await DB.list('members');S.sec=await DB.list('memberSecrets')}catch(e){t(e.message)}}
 let tt;function t(m){const e=$('#toast');e.textContent=m;e.style.display='block';clearTimeout(tt);tt=setTimeout(()=>e.style.display='none',2800)}
@@ -284,7 +299,7 @@ const aProd=()=>{
   let f='';if(S.edit){const p={...(S.edit==='new'?{aktif:true}:S.prod.find(x=>x.id===S.edit)),...S.dr};
     f=`<div class="fm">${fld('f_judul','Judul',p.judul)}<label class="fl">Deskripsi singkat<textarea id="f_desk">${esc(p.deskripsi)}</textarea></label>
 <div class="two"><label class="fl">Kategori<select id="f_kat"><option value="">-</option>${S.cat.map(c=>`<option value="${esc(c.id)}" ${p.kategoriId===c.id?'selected':''}>${esc(c.nama)}</option>`).join('')}</select></label>${fld('f_badge','Badge (HOT, BARU, DISKON, TERLARIS, dll. warna otomatis beda)',p.badge)}</div>
-<div class="two">${fld('f_harga','Harga',p.harga,'number')}${fld('f_coret','Harga coret',p.hargaCoret,'number')}</div><label class="fl">Upload foto (bisa banyak sekaligus, tiap foto bisa di-crop)<input id="f_file" type="file" accept="image/*" multiple></label><label class="fl">Atau tempel link gambar (boleh beberapa, pisahkan dengan spasi atau baris baru)</label><div class="row"><input id="f_link" placeholder="https://contoh.com/gambar.jpg" style="flex:1"><button class="btn sm" style="flex:none" data-a="imgadd">Tambah</button></div><small style="color:#94a3b8">Urutkan foto dengan tombol ‹ › atau seret. Foto pertama menjadi sampul.</small><div class="thumbs" style="align-items:flex-start">${S.imgs.map((x,k)=>`<div class="th" draggable="true" data-k="${k}">${k===0?'<em class="cv">Sampul</em>':''}<img src="${esc(x)}" alt=""><button data-a="imgdel" data-i="${k}" title="Hapus">×</button><div class="mvs"><button data-a="imgmv" data-i="${k}" data-d="-1" title="Geser ke kiri">‹</button><button data-a="imgmv" data-i="${k}" data-d="1" title="Geser ke kanan">›</button></div></div>`).join('')}</div>${fld('f_lynk','Link produk Lynk.id',p.lynkUrl)}${fld('f_urut','Nomor urutan (1 = paling depan, kosongkan = paling akhir)',p.urutan,'number')}
+<div class="two">${fld('f_harga','Harga',p.harga,'number')}${fld('f_coret','Harga coret',p.hargaCoret,'number')}</div><label class="fl">Upload foto (bisa banyak sekaligus, tiap foto bisa di-crop)<input id="f_file" type="file" accept="image/*" multiple></label><label class="fl">Atau tempel link gambar (boleh beberapa, pisahkan dengan spasi atau baris baru)</label><div class="row"><input id="f_link" placeholder="https://contoh.com/gambar.jpg" style="flex:1"><button class="btn sm" style="flex:none" data-a="imgadd">Tambah</button></div><small style="color:#94a3b8">Urutkan foto dengan tombol ‹ › atau seret. Foto pertama menjadi sampul.</small><div class="thumbs" style="align-items:flex-start">${S.imgs.map((x,k)=>`<div class="th" draggable="true" data-k="${k}">${k===0?'<em class="cv">Sampul</em>':''}<img src="${esc(x)}" alt=""><button data-a="imgdel" data-i="${k}" title="Hapus">×</button><div class="mvs"><button data-a="imgmv" data-i="${k}" data-d="-1" title="Geser ke kiri">‹</button><button data-a="imgmv" data-i="${k}" data-d="1" title="Geser ke kanan">›</button></div></div>`).join('')}</div>${fld('f_lynk','Link produk Lynk.id',p.lynkUrl)}${fld('f_prev','Link preview / demo (opsional). Jika diisi, tombol Beli di halaman Lihat berganti menjadi Preview',p.previewUrl)}${fld('f_urut','Nomor urutan (1 = paling depan, kosongkan = paling akhir)',p.urutan,'number')}
 <label class="fl"><input id="f_aktif" type="checkbox" style="width:auto" ${p.aktif!==false?'checked':''}> Tampilkan di katalog</label><br><button class="btn sm" data-a="psave">Simpan</button> <button class="btn sm ghost" data-a="edit" data-i="">Batal</button></div>`}
   return`<button class="btn sm" data-a="edit" data-i="new">+ Produk Baru</button>${f}<div style="overflow-x:auto"><table><tr><th>No</th><th>Produk</th><th>Harga</th><th>Status</th><th></th></tr>${S.prod.slice().sort(ord).map((p,n)=>`<tr><td><span class="nm">${n+1}</span></td><td>${esc(p.judul)}</td><td>${rp(p.harga)}</td><td>${p.aktif!==false?'Aktif':'Nonaktif'}</td><td style="white-space:nowrap"><span class="mvp"><button data-a="pmv" data-i="${esc(p.id)}" data-d="-1" title="Naikkan">▲</button><button data-a="pmv" data-i="${esc(p.id)}" data-d="1" title="Turunkan">▼</button></span><button class="btn sm ghost" data-a="detail" data-i="${esc(p.id)}">Lihat</button> <button class="btn sm" data-a="edit" data-i="${esc(p.id)}">Edit</button> <button class="btn sm red" data-a="pdel" data-i="${esc(p.id)}">Hapus</button></td></tr>`).join('')||'<tr><td colspan=5><div class="empty">Belum ada data.</div></td></tr>'}</table></div>`};
 const aCat=()=>`<div class="two">${fld('c_n','Nama kategori')}${fld('c_u','Urutan','1','number')}</div><button class="btn sm" data-a="csave">Tambah</button><table>${S.cat.map(c=>`<tr><td>${esc(c.nama)}</td><td><button class="btn sm red" data-a="cdel" data-i="${esc(c.id)}">Hapus</button></td></tr>`).join('')||'<tr><td><div class="empty">Belum ada kategori.</div></td></tr>'}</table>`;
@@ -293,7 +308,7 @@ const aMem=()=>`<div class="two">${fld('m_u','Username')}${fld('m_p','Password',
 function modal(){const p=S.prod.find(x=>x.id===S.modal);if(!p)return'';const im=[...(p.gambarList||[]),...(p.gambarUrl?[p.gambarUrl]:[])],gi=Math.min(S.gi||0,Math.max(im.length-1,0));
   const nv=im.length>1?`<button class="gn l" data-a="gnav" data-i="-1" aria-label="Sebelumnya">‹</button><button class="gn r" data-a="gnav" data-i="1" aria-label="Berikutnya">›</button><span class="gc">${gi+1}/${im.length}</span>`:'';
   const pic=im.length?`<div class="gal"><img src="${esc(im[gi])}" alt="${esc(p.judul)}">${nv}</div>${im.length>1?`<div class="thumbs">${im.map((x,k)=>`<img class="${k===gi?'on':''}" src="${esc(x)}" data-a="gal" data-i="${k}" alt="">`).join('')}</div>`:''}`:`<div class="box">${esc(p.judul.slice(0,28))}</div>`;
-  return`<div class="mod" data-a="close"><div class="panel pd" data-stop><button class="mx" data-a="close" aria-label="Tutup">×</button><div class="pg">${pic}</div><div class="pi"><h2>${esc(p.judul)}</h2><div class="price">${rp(p.harga)}${p.hargaCoret?`<s>${rp(p.hargaCoret)}</s>`:''}</div><p class="pdsc">${esc(p.deskripsi)}</p><div class="row"><button class="btn" data-a="buy" data-i="${esc(p.id)}">Beli Sekarang</button><button class="btn ghost" data-a="close">Tutup</button></div></div></div></div>`}
+  return`<div class="mod" data-a="close"><div class="panel pd" data-stop><button class="mx" data-a="close" aria-label="Tutup">×</button><div class="pg">${pic}</div><div class="pi"><h2>${esc(p.judul)}</h2><div class="price">${rp(p.harga)}${p.hargaCoret?`<s>${rp(p.hargaCoret)}</s>`:''}</div><p class="pdsc">${esc(p.deskripsi)}</p><div class="row">${p.previewUrl?`<button class="btn prv" data-a="prev" data-i="${esc(p.id)}">Preview &#9654;</button>`:`<button class="btn" data-a="buy" data-i="${esc(p.id)}">Beli Sekarang</button>`}<button class="btn ghost" data-a="close">Tutup</button></div></div></div></div>`}
 // Kosongkan kolom login jika browser mengisi otomatis (kecuali pengguna sudah mengetik sendiri)
 const clrLogin=()=>['l1','l2'].forEach(id=>{const e=$('#'+id);if(!e)return;e.value='';[100,400,1200].forEach(ms=>setTimeout(()=>{const x=$('#'+id);if(x&&!x.dataset.u)x.value=''},ms))});
 ['keydown','paste'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.id==='l1'||e.target.id==='l2')e.target.dataset.u=1},true));
@@ -309,7 +324,7 @@ function render(){
 }
 // ===== AKSI =====
 const g=i=>$('#'+i)?.value.trim()??'';
-const snap=()=>{S.dr={judul:g('f_judul'),deskripsi:g('f_desk'),kategoriId:g('f_kat'),badge:g('f_badge'),harga:g('f_harga'),hargaCoret:g('f_coret'),gambarUrl:g('f_img'),lynkUrl:g('f_lynk'),urutan:g('f_urut'),aktif:$('#f_aktif')?.checked!==false}};
+const snap=()=>{S.dr={judul:g('f_judul'),deskripsi:g('f_desk'),kategoriId:g('f_kat'),badge:g('f_badge'),harga:g('f_harga'),hargaCoret:g('f_coret'),gambarUrl:g('f_img'),lynkUrl:g('f_lynk'),previewUrl:g('f_prev'),urutan:g('f_urut'),aktif:$('#f_aktif')?.checked!==false}};
 const shrink=f=>new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.72))};im.onerror=()=>r(null);im.src=u});
 
 // ===== CROP FOTO (geser + zoom, pilih rasio) =====
@@ -347,6 +362,7 @@ const A={
   go(v){if(v==='katalog'){S.view='home';render();$('#katalog')?.scrollIntoView();return}S.view=v;if(v==='akun'&&!S.admin)S.amode='member';render();$('#febs').scrollTo(0,0)},
   cf(i){S.cf=i;render()},detail(i){S.modal=i;S.gi=0;render()},gal(i){S.gi=+i;render()},gnav(i){const p=S.prod.find(x=>x.id===S.modal);if(!p)return;const n=[...(p.gambarList||[]),...(p.gambarUrl?[p.gambarUrl]:[])].length;if(n<2)return;S.gi=((S.gi||0)+ +i+n)%n;render()},imgdel(i){snap();S.imgs.splice(+i,1);render()},imgmv(i,el){const k=+i,j=k+ +el.dataset.d;if(j<0||j>=S.imgs.length)return;snap();[S.imgs[k],S.imgs[j]]=[S.imgs[j],S.imgs[k]];render()},close(){S.modal=null;render()},adm(){S.amode='admin';S.view='akun';render();$('#febs').scrollTo(0,0)},tab(i){S.tab=i;S.edit=null;render()},edit(i){S.edit=i||null;S.dr={};const p=i&&i!=='new'?S.prod.find(x=>x.id===i):null,l=p?.gambarList||[];S.imgs=p?[...l,...(p.gambarUrl&&!l.includes(p.gambarUrl)?[p.gambarUrl]:[])]:[];render()},
   imgadd(){snap();let n=0;for(let u of g('f_link').split(/[\s,]+/).filter(Boolean)){if(!/^https?:\/\/\S+$/i.test(u)){t('Link tidak valid: '+u.slice(0,30));continue}u=u.replace(/^https?:\/\/drive\.google\.com\/file\/d\/([^/?#]+).*$/,'https://drive.google.com/thumbnail?id=$1&sz=w1000');if(S.imgs.length>=10){t('Maksimal 10 gambar');break}if(!S.imgs.includes(u)){S.imgs.push(u);n++}}render();if(n)t(n+' gambar ditambahkan')},
+  prev(i){const p=S.prod.find(x=>x.id===i);if(!p||!/^https?:\/\//i.test(p.previewUrl||''))return t('Link preview belum tersedia');window.open(p.previewUrl,'_blank','noopener')},
   async buy(i){const p=S.prod.find(x=>x.id===i);if(!p)return;try{const d={productId:i,waktu:Date.now()};await DB.add('clicks',d);S.clk.push(d)}catch(e){}
     window.open(p.lynkUrl||S.set.lynkProfilUrl,'_blank','noopener')},
   async fav(i){if(!S.user){t('Masuk sebagai member dulu');S.view='akun';render();return}
@@ -357,7 +373,7 @@ const A={
       else{const h=await hash(p),m=S.mem.find(x=>x.username===a&&x.passwordHash===h&&x.aktif!==false);if(!m)throw Error('Username atau password salah');S.user={...m,favorit:m.favorit||[]}}
       t('Berhasil masuk')}catch(e){t(e.message.includes('auth/')?'Email atau password admin salah':e.message)}render()},
   async logout(){try{await DB.logout()}catch(e){}S.admin=null;S.user=null;S.sec=[];S.clk=[];S.pw={};S.edit=null;S.imgs=[];S.dr={};S.modal=null;S.tab='dash';S.amode='member';S.view='home';render()},
-  async psave(){const d={judul:g('f_judul'),deskripsi:g('f_desk'),kategoriId:g('f_kat'),badge:g('f_badge'),harga:+g('f_harga')||0,hargaCoret:+g('f_coret')||0,gambarUrl:g('f_img'),lynkUrl:g('f_lynk'),urutan:+g('f_urut')||0,aktif:$('#f_aktif').checked,gambarList:S.imgs};
+  async psave(){const d={judul:g('f_judul'),deskripsi:g('f_desk'),kategoriId:g('f_kat'),badge:g('f_badge'),harga:+g('f_harga')||0,hargaCoret:+g('f_coret')||0,gambarUrl:g('f_img'),lynkUrl:g('f_lynk'),previewUrl:(v=>v&&!/^https?:\/\//i.test(v)?'https://'+v:v)(g('f_prev')),urutan:+g('f_urut')||0,aktif:$('#f_aktif').checked,gambarList:S.imgs};
     if(!d.judul)return t('Judul wajib diisi');try{let id=S.edit;if(id==='new')id=await DB.add('products',d);else await DB.set('products',id,d);S.prod=await DB.list('products');
       const l=S.prod.slice().sort(ord).filter(x=>x.id!==id),me=S.prod.find(x=>x.id===id);l.splice(d.urutan>0?Math.min(d.urutan-1,l.length):l.length,0,me);await renum(l);
       S.edit=null;S.dr={};S.imgs=[];t('Produk tersimpan')}catch(e){t(e.message)}render()},
@@ -389,17 +405,18 @@ let ti=0;setInterval(()=>{const e=$('#tag'),l=S.set.taglineList||[];if(e&&l.leng
 new MutationObserver(()=>{const e=$('#tag');if(e&&!e.textContent&&S.set.taglineList?.length)e.textContent=S.set.taglineList[0]}).observe($('#app'),{childList:true});
 
 // ===== LATAR 3D =====
-(()=>{try{const cv=$('#bg'),R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true}),sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=14;
+const initBg=()=>{try{const cv=$('#bg'),R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:innerWidth>860,powerPreference:'low-power'}),sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=14;
   sc.add(new THREE.AmbientLight(0xffffff,.6));const L=new THREE.PointLight(0x22D3EE,1.4,60);L.position.set(8,8,10);sc.add(L);const L2=new THREE.PointLight(0xFF8A1F,1.2,60);L2.position.set(-9,-6,8);sc.add(L2);
   const geo=[new THREE.IcosahedronGeometry(.9),new THREE.TorusGeometry(.7,.28,16,40),new THREE.BoxGeometry(1.2,1.2,1.2),new THREE.OctahedronGeometry(.9)],col=[0x22D3EE,0xFF8A1F,0x7C3AED],ms=[];
-  const n=innerWidth<860?12:25;for(let i=0;i<n;i++){const m=new THREE.Mesh(geo[i%4],new THREE.MeshStandardMaterial({color:col[i%3],metalness:.5,roughness:.25,transparent:true,opacity:.75}));
+  const n=innerWidth<860?10:18;for(let i=0;i<n;i++){const m=new THREE.Mesh(geo[i%4],new THREE.MeshStandardMaterial({color:col[i%3],metalness:.5,roughness:.25,transparent:true,opacity:.75}));
     m.position.set((Math.random()-.5)*26,(Math.random()-.5)*16,(Math.random()-.5)*12-3);m.userData={s:.003+Math.random()*.006,o:Math.random()*6};m.scale.setScalar(.6+Math.random());sc.add(m);ms.push(m)}
   let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
-  const rs=()=>{R.setSize(innerWidth,innerHeight,false);R.setPixelRatio(Math.min(devicePixelRatio,2));cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};rs();addEventListener('resize',rs);
+  const rs=()=>{R.setSize(innerWidth,innerHeight,false);R.setPixelRatio(Math.min(devicePixelRatio,innerWidth<860?1.25:1.5));cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};rs();addEventListener('resize',rs);
   const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;let k=0;
-  (function loop(){requestAnimationFrame(loop);k+=.01;if(!calm)ms.forEach(m=>{m.rotation.x+=m.userData.s;m.rotation.y+=m.userData.s*1.4;m.position.y+=Math.sin(k+m.userData.o)*.004});
+  (function loop(){requestAnimationFrame(loop);if(document.hidden)return;k+=.01;if(!calm)ms.forEach(m=>{m.rotation.x+=m.userData.s;m.rotation.y+=m.userData.s*1.4;m.position.y+=Math.sin(k+m.userData.o)*.004});
     cam.position.x+=(mx*3-cam.position.x)*.03;cam.position.y+=(-my*2-cam.position.y)*.03;cam.lookAt(0,0,0);R.render(sc,cam)})();
-}catch(e){}})();
+}catch(e){}};
+const waitBg=()=>window.THREE?(window.requestIdleCallback?requestIdleCallback(initBg,{timeout:1500}):setTimeout(initBg,300)):setTimeout(waitBg,120);waitBg();
 
 // ===== PWA (Service Worker via Blob) =====
 try{if('serviceWorker'in navigator){const u=URL.createObjectURL(new Blob([`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('fetch',()=>{});`],{type:'text/javascript'}));navigator.serviceWorker.register(u).catch(()=>{})}}catch(e){}
