@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="2.2"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="2.5"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Febs%20Digital%22%2C%22short_name%22%3A%22Febs%22%2C%22display%22%3A%22standalone%22%2C%22start_url%22%3A%22.%22%2C%22background_color%22%3A%22%2307122E%22%2C%22theme_color%22%3A%22%230B1F4B%22%7D">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@700;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
 <style>
@@ -100,6 +100,61 @@ footer{margin-top:36px;padding:28px 16px 8px;text-align:center;border-top:1px so
 .bd.hot{background:linear-gradient(135deg,#EF4444,#F97316)}.bd.new{background:linear-gradient(135deg,#16A34A,#22C55E)}.bd.dsc{background:linear-gradient(135deg,#7C3AED,#4F46E5)}.bd.bst{background:linear-gradient(135deg,#FACC15,#F59E0B);color:#111}.bd.ltd{background:linear-gradient(135deg,#EC4899,#BE185D)}
 .mvp{display:inline-flex;gap:4px;margin-right:6px;vertical-align:middle}.mvp button{all:unset;cursor:pointer;width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.14);text-align:center;line-height:28px;font-size:13px}.mvp button:hover{background:var(--or)}
 .nm{display:inline-grid;place-items:center;min-width:28px;height:28px;border-radius:50%;background:var(--or);font:700 12px Poppins}
+/* v2.3: banner baru */
+.hero{min-height:0;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;justify-content:stretch;padding:46px 40px 0;margin-top:8px;border-radius:32px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(11,31,75,.78),rgba(7,18,46,.6));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 30px 80px #0009}
+.hero:before{content:'';position:absolute;inset:-40%;z-index:0;pointer-events:none;background:radial-gradient(circle at 20% 30%,#22d3ee30,transparent 38%),radial-gradient(circle at 82% 18%,#7c3aed44,transparent 38%),radial-gradient(circle at 62% 92%,#ff8a1f30,transparent 38%);animation:au 16s ease-in-out infinite alternate}
+.hero>*{position:relative;z-index:1}
+@keyframes au{to{transform:translate(4%,3%) rotate(12deg) scale(1.08)}}
+.hl{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-start}
+.promo{position:static;transform:none;background:linear-gradient(135deg,#FACC15,#FB5607);color:#111;font:800 12px Poppins;padding:8px 14px;border-radius:999px;box-shadow:0 0 0 0 #fb560688;animation:pu 2.2s infinite}
+@keyframes pu{70%{box-shadow:0 0 0 12px #fb560600}100%{box-shadow:0 0 0 0 #fb560600}}
+.hero h1{font-size:clamp(30px,4.8vw,64px);line-height:1.05;word-break:break-word}
+.hero .sub{max-width:560px}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin:4px 0 22px}.stats div{display:flex;flex-direction:column;padding:0 22px}.stats div:first-child{padding-left:0}.stats div+div{border-left:1px solid rgba(255,255,255,.18)}.stats b{font:800 26px/1.1 Poppins;color:#fff}.stats small{color:#94a3b8;font-size:12px}
+.hr{height:clamp(300px,34vw,440px);min-width:0}
+.sw{position:absolute;width:56%;aspect-ratio:1/1;border-radius:22px;overflow:hidden;background:#0a1633;border:1px solid rgba(255,255,255,.22);box-shadow:0 24px 60px #000a;cursor:pointer;transform:rotate(var(--r,0deg));transition:box-shadow .3s;animation:fa 6s ease-in-out infinite}
+.sw:hover{animation-play-state:paused;z-index:6;box-shadow:0 0 0 2px var(--or),0 30px 70px #ff8a1f55}
+.sw img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.sw img.bl{object-fit:cover;filter:blur(16px) brightness(.5);transform:scale(1.2)}
+.sw0{left:22%;top:9%;--r:-3deg;z-index:3}.sw1{left:0;top:36%;width:48%;--r:-9deg;z-index:1;animation-delay:-2s}.sw2{right:0;top:0;width:50%;--r:8deg;z-index:2;animation-delay:-4s}
+.swc{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;background:linear-gradient(transparent,#030a1eee);text-align:left}.swc b{display:block;font:700 12px/1.3 Poppins;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.swc span{font:800 13px Poppins;color:var(--or)}
+.swf{position:absolute;inset:0;display:grid;place-items:center;padding:14px;text-align:center;font:800 40px Poppins;color:#ffffff88;background:linear-gradient(135deg,#0B1F4B,#7C3AED)}
+.fchip{position:absolute;z-index:5;padding:8px 14px;border-radius:999px;font:700 12px Poppins;white-space:nowrap;animation:fa 5s ease-in-out infinite}.fc1{right:2%;bottom:6%;animation-delay:-1s}.fc2{left:2%;top:5%;animation-delay:-3s}
+@keyframes fa{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(var(--r,0deg))}}
+.mq{grid-column:1/-1;margin:8px -40px 0;overflow:hidden;padding:13px 0;border-top:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+.mqt{display:flex;gap:34px;width:max-content;animation:mq 30s linear infinite}.mq:hover .mqt{animation-play-state:paused}.mqt span{white-space:nowrap;font:700 12px Poppins;letter-spacing:.12em;text-transform:uppercase;color:#cbd5e1}.mqt span:before{content:'✦';color:var(--or);margin-right:34px}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media(max-width:860px){.hero .eye{font-size:10px;letter-spacing:.1em;padding:7px 11px}.stats{flex-wrap:nowrap}.stats small{font-size:10.5px}.hero{grid-template-columns:1fr;gap:10px;padding:26px 18px 0;border-radius:26px}.mq{margin:6px -18px 0}.hr{height:310px}.hero h1{font-size:clamp(28px,9vw,44px)}.stats b{font-size:21px}.stats div{padding:0 10px}.stats div:first-child{padding-left:0}.hero .sub{font-size:16px}.sw0{left:20%;width:60%}.sw1{width:50%}.sw2{width:52%}}
+@media(prefers-reduced-motion:reduce){.hero:before,.sw,.fchip,.mqt,.promo{animation:none}}
+/* v2.4: tagline berjalan lebih menonjol + rapikan HP */
+.mq{padding:15px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);background:linear-gradient(90deg,rgba(255,138,31,.1),rgba(124,58,237,.14),rgba(34,211,238,.1))}
+.mqt{gap:30px}.mqt span{font:700 13px Poppins;letter-spacing:.1em;color:#fff}.mqt span:before{margin-right:30px;font-size:14px}
+@media(max-width:860px){
+ .hero{padding:22px 16px 0;gap:6px}.mq{margin:4px -16px 0;padding:13px 0}.mqt span{font-size:11.5px;letter-spacing:.08em}
+ .hl{gap:13px}.hero .sub{font-size:15.5px;line-height:1.4}
+ .btns{gap:8px}.btns .btn{flex:1 1 100%;text-align:center;padding:13px 16px}
+ .stats{margin:2px 0 6px;justify-content:space-between}.stats div{flex:1;padding:0 8px}.stats b{font-size:20px}
+ .hr{height:290px;margin-top:4px}
+ #q{max-width:none!important;width:100%}
+}
+/* v2.5: banner lebih ringkas + tagline berjalan tanpa simbol */
+.hero{padding:30px 32px 0;gap:16px;border-radius:28px}
+.hero h1{font-size:clamp(26px,3.8vw,50px)}.hero .sub{font-size:clamp(15px,1.7vw,20px)}
+.hl{gap:12px}.hero .btn{padding:11px 20px;font-size:13px}
+.stats{margin:2px 0 16px}.stats b{font-size:22px}
+.hr{height:clamp(240px,27vw,350px)}
+.sw0{left:25%;top:8%;width:50%}.sw1{left:0;top:40%;width:42%}.sw2{right:0;top:0;width:44%}
+.mq{margin:6px -32px 0;padding:11px 0}.mqt{gap:60px}.mqt span{font-size:12.5px}.mqt span:before{content:none;display:none}
+@media(max-width:860px){
+ .hero{padding:16px 14px 0;gap:4px;border-radius:22px}.mq{margin:2px -14px 0;padding:10px 0}.mqt{gap:44px}.mqt span{font-size:11px}
+ .hero h1{font-size:clamp(24px,7.6vw,34px)}.hero .sub{font-size:14px;line-height:1.4}
+ .hl{gap:10px}.hero .btn{padding:10px 14px;font-size:13px}.btns{gap:8px}
+ .hero .eye{font-size:9.5px;padding:6px 10px}.promo{font-size:11px;padding:6px 12px}
+ .stats b{font-size:17px}.stats small{font-size:10px}.stats div{padding:0 8px}
+ .hr{height:215px;margin-top:0}
+ .sw0{left:27%;top:6%;width:46%}.sw1{left:2%;top:40%;width:38%}.sw2{right:2%;top:0;width:40%}
+ .swc{padding:20px 10px 8px}.swc b{font-size:11px}.swc span{font-size:12px}.fchip{font-size:11px;padding:6px 11px}
+}
 </style></head><body>
 <div id="febs"><canvas id="bg"></canvas><nav class="side glass" id="nav"></nav><main id="app"><div style="padding:90px 20px;text-align:center;color:#94a3b8">Memuat Febs Digital...</div></main><div id="wab"></div><div id="mdl"></div><div id="toast"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -117,7 +172,7 @@ const firebaseConfig = {
   appId: "1:70595428399:web:7c9c415c8f49b6456a46da"
 };
 
-const APP_VERSION='2.2';
+const APP_VERSION='2.5';
 const $=s=>document.querySelector(s);
 // Mode layar penuh: pindahkan aplikasi keluar dari isi postingan Blogger agar menutupi header, sidebar, dan elemen tema
 (()=>{const F=$('#febs');document.body.appendChild(F);document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';['link[rel=manifest]','link[href*="fonts.googleapis"]','meta[name=theme-color]'].forEach(s=>{const e=document.querySelector(s);if(e)document.head.appendChild(e)})})();
@@ -142,7 +197,7 @@ const IC={mail:sv('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 
 Object.assign(IC,{home:sv('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>'),grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),heart:sv('<path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 0 0-7.4 7.4L12 21.8l8.8-8.8a5.2 5.2 0 0 0 0-7.4z"/>'),
 wa:'<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'});
 const waNo=v=>{let d=String(v||'').replace(/\D/g,'');if(d.startsWith('0'))d='62'+d.slice(1);return d};
-const DEF={namaApp:'Febs Digital',bannerJudul:'Febs Digital',bannerSubjudul:'Produk Digital Premium untuk Kerja, Belajar, dan Bisnis Anda',taglineList:['Download Instan, Pakai Hari Ini','Satu Kali Bayar, Akses Seumur Hidup','Template dan Tools Siap Pakai, Hemat Waktu Berjam-jam'],lynkProfilUrl:'https://lynk.id/',whatsapp:'',teksCopyright:'© 2026 Febs Digital. All Rights Reserved.'};
+const DEF={namaApp:'Febs Digital',bannerJudul:'Febs Digital',bannerSubjudul:'Produk Digital Premium untuk Kerja, Belajar, dan Bisnis Anda',taglineList:['Download Instan, Langsung Pakai','Sekali Bayar, Akses Seumur Hidup','Template Siap Pakai, Hemat Waktu Berjam-jam','Kerja Lebih Cerdas dengan Tools Otomatis','Dari Ide ke Hasil, Tanpa Ribet','Tingkatkan Produktivitas Mulai Hari Ini'],lynkProfilUrl:'https://lynk.id/',whatsapp:'',teksCopyright:'© 2026 Febs Digital. All Rights Reserved.'};
 
 // ===== LAPISAN DATA =====
 let DB, onAuth=()=>{};
@@ -178,7 +233,7 @@ const renum=l=>Promise.all(l.map((p,n)=>p.urutan===n+1?null:DB.set('products',p.
 const BDC={hot:'hot',baru:'new',new:'new',diskon:'dsc',promo:'dsc',sale:'dsc',terlaris:'bst','best seller':'bst',bestseller:'bst',limited:'ltd',terbatas:'ltd'},PAL=['#0891B2','#DB2777','#65A30D','#EA580C','#7C3AED','#0D9488'];
 const bdi=b=>{if(!b)return'';const k=String(b).trim().toLowerCase(),c=BDC[k];if(c)return`<i class="bd ${c}">${k==='hot'?'🔥 ':''}${esc(b)}</i>`;let h=0;for(const ch of k)h=(h*31+ch.charCodeAt(0))>>>0;return`<i class="bd" style="background:${PAL[h%PAL.length]}">${esc(b)}</i>`};
 async function loadAll(){
-  try{const[p,c,m,s]=await Promise.all([DB.list('products'),DB.list('categories'),DB.list('members'),DB.getSettings()]);S.prod=p;S.cat=c.sort((a,b)=>(a.urutan||0)-(b.urutan||0));S.mem=m;S.set={...DEF,...s}}catch(e){t('Gagal memuat data: '+e.message)}
+  try{const[p,c,m,s]=await Promise.all([DB.list('products'),DB.list('categories'),DB.list('members'),DB.getSettings()]);S.prod=p;S.cat=c.sort((a,b)=>(a.urutan||0)-(b.urutan||0));S.mem=m;S.set={...DEF,...s};if((S.set.taglineList||[]).join('|')==='Download Instan, Pakai Hari Ini|Satu Kali Bayar, Akses Seumur Hidup|Template dan Tools Siap Pakai, Hemat Waktu Berjam-jam')S.set.taglineList=DEF.taglineList}catch(e){t('Gagal memuat data: '+e.message)}
   S.loading=false;render();
 }
 async function loadAdmin(){try{S.clk=await DB.list('clicks');S.mem=await DB.list('members');S.sec=await DB.list('memberSecrets')}catch(e){t(e.message)}}
@@ -194,9 +249,15 @@ const grid=l=>l.length?`<div class="grid">${l.map(card).join('')}</div>`:`<div c
 function home(){
   const s=S.set,q=S.q.toLowerCase();
   const l=items().filter(p=>(S.cf==='all'||p.kategoriId===S.cf)&&(p.judul+p.deskripsi).toLowerCase().includes(q));
-  return`<section class="hero"><span class="promo">PROMO SPESIAL</span><span class="eye"><i></i>TOKO PRODUK DIGITAL</span><h1>${esc(s.bannerJudul)}</h1><p class="sub">${esc(s.bannerSubjudul)}</p><p class="tag" id="tag"></p>
+  const top=items().filter(p=>p).slice(0,3),sw=S.loading||!top.length?[null,null,null].slice(0,3):top;
+  const stk=sw.map((p,i)=>p?`<div class="sw sw${i}" data-a="detail" data-i="${esc(p.id)}" title="${esc(p.judul)}">${cover(p)?`<img class="bl" aria-hidden="true" src="${esc(cover(p))}" alt=""><img src="${esc(cover(p))}" alt="${esc(p.judul)}" loading="lazy">`:`<div class="swf">✦</div>`}<div class="swc"><b>${esc(p.judul)}</b><span>${rp(p.harga)}</span></div></div>`:`<div class="sw sw${i}"><div class="swf">✦</div></div>`).join('');
+  const tl=(S.set.taglineList||[]).filter(Boolean);let TL=[];if(tl.length)while(TL.length<8)TL=TL.concat(tl);const mqi=TL.map(x=>`<span>${esc(x)}</span>`).join(''),mqd=Math.max(26,TL.length*4.5);
+  const nP=S.loading?'•':items().length;
+  return`<section class="hero"><div class="hl"><div class="hrow"><span class="eye"><i></i>TOKO PRODUK DIGITAL</span><span class="promo">🔥 PROMO SPESIAL</span></div><h1>${esc(s.bannerJudul)}</h1><p class="sub">${esc(s.bannerSubjudul)}</p>
 <div class="btns"><button class="btn" data-a="go" data-i="katalog">Lihat Semua Produk &rarr;</button><a class="btn ghost" href="${esc(s.lynkProfilUrl)}" target="_blank" rel="noopener">Beli Lewat Lynk.id</a></div>
-<div class="chips">${['Template siap pakai','Tools otomatis','Meningkatkan produktivitas','Cocok untuk profesional, pelajar, dan pebisnis'].map(x=>`<span class="chip glass">✓ ${x}</span>`).join('')}</div></section>
+<div class="stats"><div><b>${nP}</b><small>Produk Digital</small></div><div><b>⚡</b><small>Download Instan</small></div><div><b>∞</b><small>Akses Selamanya</small></div></div></div>
+<div class="hr">${stk}<span class="fchip fc1 glass">✓ Sekali bayar</span><span class="fchip fc2 glass">⚡ Langsung unduh</span></div>
+<div class="mq"><div class="mqt" style="animation-duration:${mqd}s">${mqi}${mqi}</div></div></section>
 <section class="panel" id="katalog"><h2>Daftar Produk Digital</h2><div class="bar"><input id="q" placeholder="Cari produk..." value="${esc(S.q)}" style="max-width:260px"><button class="fb ${S.cf==='all'?'on':''}" data-a="cf" data-i="all">Semua</button>${S.cat.map(c=>`<button class="fb ${S.cf===c.id?'on':''}" data-a="cf" data-i="${esc(c.id)}">${esc(c.nama)}</button>`).join('')}</div>
 ${S.loading?`<div class="grid">${'<div class="sk"></div>'.repeat(4)}</div>`:grid(l)}</section>
 <div class="trust">${[['↓','Instant Download','File langsung bisa diunduh setelah bayar'],['∞','Akses Seumur Hidup','Sekali beli, bisa dipakai kapan saja'],['✆','Support Terbaik','Ada bantuan kalau Anda butuh']].map(([i,b,s])=>`<div class="tr glass"><span class="ti">${i}</span><div><b>${b}</b><small>${s}</small></div></div>`).join('')}</div>`;
@@ -227,7 +288,7 @@ const aProd=()=>{
 <label class="fl"><input id="f_aktif" type="checkbox" style="width:auto" ${p.aktif!==false?'checked':''}> Tampilkan di katalog</label><br><button class="btn sm" data-a="psave">Simpan</button> <button class="btn sm ghost" data-a="edit" data-i="">Batal</button></div>`}
   return`<button class="btn sm" data-a="edit" data-i="new">+ Produk Baru</button>${f}<div style="overflow-x:auto"><table><tr><th>No</th><th>Produk</th><th>Harga</th><th>Status</th><th></th></tr>${S.prod.slice().sort(ord).map((p,n)=>`<tr><td><span class="nm">${n+1}</span></td><td>${esc(p.judul)}</td><td>${rp(p.harga)}</td><td>${p.aktif!==false?'Aktif':'Nonaktif'}</td><td style="white-space:nowrap"><span class="mvp"><button data-a="pmv" data-i="${esc(p.id)}" data-d="-1" title="Naikkan">▲</button><button data-a="pmv" data-i="${esc(p.id)}" data-d="1" title="Turunkan">▼</button></span><button class="btn sm ghost" data-a="detail" data-i="${esc(p.id)}">Lihat</button> <button class="btn sm" data-a="edit" data-i="${esc(p.id)}">Edit</button> <button class="btn sm red" data-a="pdel" data-i="${esc(p.id)}">Hapus</button></td></tr>`).join('')||'<tr><td colspan=5><div class="empty">Belum ada data.</div></td></tr>'}</table></div>`};
 const aCat=()=>`<div class="two">${fld('c_n','Nama kategori')}${fld('c_u','Urutan','1','number')}</div><button class="btn sm" data-a="csave">Tambah</button><table>${S.cat.map(c=>`<tr><td>${esc(c.nama)}</td><td><button class="btn sm red" data-a="cdel" data-i="${esc(c.id)}">Hapus</button></td></tr>`).join('')||'<tr><td><div class="empty">Belum ada kategori.</div></td></tr>'}</table>`;
-const aSet=()=>{const s=S.set;return`${fld('s_app','Nama aplikasi',s.namaApp)}${fld('s_jd','Judul banner',s.bannerJudul)}${fld('s_sj','Subjudul banner',s.bannerSubjudul)}<label class="fl">Tagline (satu per baris)<textarea id="s_tg">${esc((s.taglineList||[]).join('\n'))}</textarea></label>${fld('s_ly','Link profil Lynk.id',s.lynkProfilUrl)}${fld('s_wa','WhatsApp (contoh 6281234567890)',s.whatsapp)}${fld('s_cp','Teks copyright',s.teksCopyright)}<br><button class="btn sm" data-a="ssave">Simpan Pengaturan</button>`};
+const aSet=()=>{const s=S.set;return`${fld('s_app','Nama aplikasi',s.namaApp)}${fld('s_jd','Judul banner',s.bannerJudul)}${fld('s_sj','Subjudul banner',s.bannerSubjudul)}<label class="fl">Tagline berjalan di banner (satu per baris)<textarea id="s_tg">${esc((s.taglineList||[]).join('\n'))}</textarea></label>${fld('s_ly','Link profil Lynk.id',s.lynkProfilUrl)}${fld('s_wa','WhatsApp (contoh 6281234567890)',s.whatsapp)}${fld('s_cp','Teks copyright',s.teksCopyright)}<br><button class="btn sm" data-a="ssave">Simpan Pengaturan</button>`};
 const aMem=()=>`<div class="two">${fld('m_u','Username')}${fld('m_p','Password','','password')}</div>${fld('m_n','Nama')}<br><button class="btn sm" data-a="msave">Tambah Member</button><table><tr><th>Username</th><th>Nama</th><th>Password</th><th>Status</th><th></th></tr>${S.mem.map(m=>`<tr><td>${esc(m.username)}</td><td>${esc(m.nama)}</td><td><code>${S.pw[m.id]?esc(S.sec.find(x=>x.memberId===m.id)?.password??'(tidak tersimpan)'):'••••••••'}</code> <button class="btn sm ghost" data-a="mpw" data-i="${esc(m.id)}">${S.pw[m.id]?'Sembunyi':'Lihat'}</button></td><td>${m.aktif!==false?'Aktif':'Nonaktif'}</td><td><button class="btn sm" data-a="mtog" data-i="${esc(m.id)}">Ubah</button> <button class="btn sm red" data-a="mdel" data-i="${esc(m.id)}">Hapus</button></td></tr>`).join('')||'<tr><td><div class="empty">Belum ada member.</div></td></tr>'}</table>`;
 function modal(){const p=S.prod.find(x=>x.id===S.modal);if(!p)return'';const im=[...(p.gambarList||[]),...(p.gambarUrl?[p.gambarUrl]:[])],gi=Math.min(S.gi||0,Math.max(im.length-1,0));
   const nv=im.length>1?`<button class="gn l" data-a="gnav" data-i="-1" aria-label="Sebelumnya">‹</button><button class="gn r" data-a="gnav" data-i="1" aria-label="Berikutnya">›</button><span class="gc">${gi+1}/${im.length}</span>`:'';
