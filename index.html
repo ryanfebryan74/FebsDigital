@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="2.9"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="version" content="3.1"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Febs Digital</title><meta name="theme-color" content="#0B1F4B">
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Febs%20Digital%22%2C%22short_name%22%3A%22Febs%22%2C%22display%22%3A%22standalone%22%2C%22start_url%22%3A%22.%22%2C%22background_color%22%3A%22%2307122E%22%2C%22theme_color%22%3A%22%230B1F4B%22%7D">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@700;800&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
@@ -215,6 +215,35 @@ details.gbox summary{cursor:pointer;font:700 15px Poppins;list-style:none;displa
 .cfc .fl{text-align:left;color:#cbd5e1}.cfc input{text-align:center;letter-spacing:.2em;font-weight:700}
 .cfc .row{margin-top:14px}.cfc .btn{padding:12px 10px}.btn.cfd{background:linear-gradient(135deg,#F97316,#EF4444);box-shadow:0 8px 24px #ef444455}
 @media(max-width:520px){.xl.h{display:none}.vl{font-size:9px}}
+/* v3.0: footer baru */
+.ft.ft2{text-align:center;padding:48px 22px 20px;background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.38),transparent 60%),radial-gradient(ellipse at 85% 100%,rgba(255,138,31,.2),transparent 55%),linear-gradient(160deg,rgba(11,31,75,.94),rgba(7,18,46,.98));display:flex;flex-direction:column;align-items:center;gap:14px}
+.ft2:after{left:50%;right:auto;transform:translateX(-50%);bottom:-44px}
+.ft2 .fbd{position:relative;margin-bottom:10px}.ft2 .fbd:before{content:'';position:absolute;inset:-12px;border-radius:32px;border:1px solid rgba(255,255,255,.16)}.ft2 .fbd:after{content:'';position:absolute;inset:-26px;border-radius:44px;border:1px dashed rgba(255,255,255,.09)}
+.ft2 .lg{width:64px;height:64px;border-radius:20px;font-size:34px}
+.fwm{position:relative;z-index:1;font:900 clamp(28px,5.5vw,52px)/1.05 Unbounded,Poppins,sans-serif;letter-spacing:-.02em;text-transform:uppercase;background:linear-gradient(90deg,#fff,#22D3EE 40%,#FF8A1F 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fhd{position:relative;z-index:1;font:700 clamp(16px,2.4vw,22px) Poppins;color:#fff}
+.fsb{position:relative;z-index:1;margin:0;max-width:520px;color:#a8b5cc;font-size:14px}
+.fpl{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px}.fpl span{padding:7px 16px;border-radius:999px;font:700 11px Poppins;letter-spacing:.14em;text-transform:uppercase;color:#e2e8f0;background:linear-gradient(135deg,rgba(255,138,31,.18),rgba(124,58,237,.24));border:1px solid rgba(255,255,255,.18)}
+.ft2 .ftl{width:100%;margin-top:18px;padding-top:18px;border-top:0}.ft2 .ftl:before{content:'';position:absolute;left:10%;right:10%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent)}
+/* v3.1: footer lebih ringkas */
+.ft.ft2{margin-top:28px;padding:26px 18px 12px;gap:8px;border-radius:22px}
+.ft2:after{font-size:70px;bottom:-26px}
+.ft2 .fbd{margin-bottom:6px}.ft2 .fbd:before{inset:-8px;border-radius:24px}.ft2 .fbd:after{display:none}
+.ft2 .lg{width:44px;height:44px;border-radius:14px;font-size:24px}
+.fwm{font-size:clamp(20px,3.6vw,30px)}
+.fhd{font-size:clamp(13px,1.8vw,16px)}
+.fsb{font-size:12.5px;max-width:440px}
+.fpl{gap:6px;margin-top:2px}.fpl span{padding:5px 12px;font-size:9.5px;letter-spacing:.12em}
+.ft2 .ftl{margin-top:10px;padding-top:12px;font-size:11px}
+.tr{padding:12px 16px;gap:12px}.ti{width:38px;height:38px;border-radius:12px;font-size:17px}.tr b{font-size:14px}.tr small{font-size:11.5px}
+@media(max-width:520px){
+.ft.ft2{margin-top:20px;padding:20px 14px 10px;gap:6px}
+.ft2 .lg{width:38px;height:38px;font-size:20px;border-radius:12px}.ft2 .fbd:before{display:none}
+.fwm{font-size:20px}.fhd{font-size:13px}.fsb{font-size:11.5px;line-height:1.45}
+.fpl span{padding:4px 9px;font-size:8.5px;letter-spacing:.08em}
+.ft2:after{display:none}.ft2 .ftl{margin-top:6px;padding-top:10px}
+.trust{gap:8px;margin-top:14px}.tr{padding:9px 12px;gap:10px}.ti{width:32px;height:32px;font-size:15px;border-radius:10px}.tr b{font-size:12.5px}.tr small{font-size:10.5px}
+}
 </style></head><body>
 <div id="febs"><div id="ld"><div class="lgx"><span class="lg big">F</span><i></i></div><small>Febs Digital</small></div><canvas id="bg"></canvas><nav class="side glass" id="nav"></nav><main id="app"></main><div id="wab"></div><div id="mdl"></div><div id="cfm"></div><div id="toast"></div></div>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -399,7 +428,7 @@ function render(){
   const N=[['home','Beranda'],['katalog','Katalog'],['fav','Favorit'],['akun','Akun']];
   $('#nav').innerHTML=`<div class="logo">Febs <span>Digital</span></div>`+N.map(([k,v])=>`<button class="ni ${S.view===k&&!(k==='akun'&&(S.admin||S.amode==='admin'))?'on':''}" data-a="go" data-i="${k}">${v}</button>`).join('')+`<button class="gear ${S.admin||(S.view==='akun'&&S.amode==='admin')?'on':''}" data-a="adm" title="Admin" aria-label="Admin">${IC.gear}</button>`;
   const v={home,fav,akun}[S.view]||home;const keep=$('#q')===document.activeElement;
-  $('#app').innerHTML=v()+`<footer class="ft"><div class="ftg"><div class="ftb"><div class="br0"><span class="lg">F</span><b>${esc(S.set.namaApp)}</b></div><p>Template, tools, source code, dan konten digital siap pakai untuk kerja, belajar, dan bisnis Anda.</p></div><div class="ftc"><h4>Menu</h4>${[['home','Beranda'],['katalog','Katalog'],['fav','Favorit'],['akun','Akun']].map(([k,v])=>`<button data-a="go" data-i="${k}">${v}</button>`).join('')}</div><div class="ftc"><h4>Kategori</h4>${S.cat.slice(0,5).map(c=>`<button data-a="fcat" data-i="${esc(c.id)}">${esc(c.nama)}</button>`).join('')||'<span>Segera hadir</span>'}</div><div class="ftc"><h4>Hubungi</h4><a data-t="lynk" href="${esc(S.set.lynkProfilUrl)}" target="_blank" rel="noopener">Lynk.id</a>${waNo(S.set.whatsapp)?`<a data-t="wa" href="https://wa.me/${esc(waNo(S.set.whatsapp))}" target="_blank" rel="noopener">WhatsApp</a>`:''}</div></div><div class="ftl"><span>${esc(S.set.teksCopyright)}</span></div></footer>`;
+  $('#app').innerHTML=v()+`<footer class="ft ft2"><div class="fbd"><span class="lg">F</span></div><div class="fwm">${esc(S.set.namaApp)}</div><h3 class="fhd">Digital yang Bekerja untuk Anda</h3><p class="fsb">Template, tools, dan source code siap pakai. Pilih, bayar, langsung gunakan, dan hemat waktu sejak hari pertama.</p><div class="fpl">${['Template','Tools Otomatis','Source Code','Konten Kreatif'].map(x=>`<span>${x}</span>`).join('')}</div><div class="ftl"><span>${esc(S.set.teksCopyright)}</span></div></footer>`;
   clrLogin();
   $('#wab').innerHTML=!S.admin&&waNo(S.set.whatsapp)?`<a class="wa" data-t="wa" href="https://wa.me/${esc(waNo(S.set.whatsapp))}" target="_blank" rel="noopener" aria-label="Hubungi via WhatsApp" title="Hubungi via WhatsApp">${IC.wa}</a>`:'';
   $('#mdl').innerHTML=S.modal?modal():'';$('#febs').classList.toggle('mo',!!S.modal);
